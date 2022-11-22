@@ -6,7 +6,7 @@ function Header() {
 
     const [state, dispatch] = useStore();
     const [job, setJob] = useState('');
-    console.log(job, );
+    // console.log(job, );
     const handleAddJob =() =>{
         if(job!==''){
             dispatch(addJob(job));
@@ -22,7 +22,7 @@ function Header() {
                 value={job}
                 ref={inputRef}
                 onChange={(e) =>setJob(e.target.value)}
-                className="bg-slate-200 outline-none p-2 pl-4  flex-1 rounded-lg text-lg text-gray-800 focus:outline-green-500" type="text" 
+                className="bg-white outline-none p-2 pl-4  flex-1 rounded-lg text-lg text-gray-800 focus:outline-green-500" type="text" 
             />
             <button 
                 onClick={handleAddJob}
