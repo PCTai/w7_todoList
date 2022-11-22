@@ -7,6 +7,8 @@ function Header() {
     const [state, dispatch] = useStore();
     const [job, setJob] = useState('');
     // console.log(job, );
+    const inputRef = useRef();
+
     const handleAddJob =() =>{
         if(job!==''){
             dispatch(addJob(job));
@@ -14,13 +16,20 @@ function Header() {
             inputRef.current.focus();
         }
     }
-    const inputRef = useRef();
+    const handleOnKeyDown =(e) =>{
+        if(job!=='' && e.keyCode===13){
+            dispatch(addJob(job));
+            setJob('');
+            inputRef.current.focus();
+        }
+    }
 
     return ( 
         <div className="header w-full flex ">
             <input 
                 value={job}
                 ref={inputRef}
+                onKeyDown={handleOnKeyDown}
                 onChange={(e) =>setJob(e.target.value)}
                 className="bg-white outline-none p-2 pl-4  flex-1 rounded-lg text-lg text-gray-800 focus:outline-green-500" type="text" 
             />

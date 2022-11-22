@@ -17,7 +17,7 @@ function Filter() {
             <div className="handle">
                 <button 
                     onClick={handleDeleteCompleted}
-                className="p-1 pl-2 pr-2 rounded-lg bg-red-500">Delete Completed</button>
+                className="p-1 pl-2 pr-2 rounded-lg bg-red-500"><i className="fa-solid fa-trash-can"></i> Completed</button>
             </div>
             <div className="filters  ">
 

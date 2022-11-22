@@ -1,99 +1,112 @@
-import {ADD_JOB, SET_JOB, SET_COMPLETED_JOBS, DELETE_JOB, DELETED_COMPLETED_JOBS, SET_FILTER} from '../constants'
-const initState= {
-    jobs: [
-        {
-            id:1,
-            completed: false,
-            name: "code todolist"
-        },
-        {
-            id:2,
-            completed: true,
-            name: "bt week 6"
-        }
-    ],
+import { ADD_JOB, SET_JOB, SET_COMPLETED_JOBS, DELETE_JOB, DELETED_COMPLETED_JOBS, SET_FILTER } from '../constants';
+
+if (!localStorage.getItem('todo')) {
+    localStorage.setItem('todo', JSON.stringify([]));
+}
+const todo = JSON.parse(localStorage.getItem('todo'));
+// console.log(todo);
+const initState = {
+    jobs: todo,
     filter: 'all',
     filters: {
         all: () => true,
         active: (job) => !job.completed,
-        completed : (job)=> job.completed 
+        completed: (job) => job.completed
     }
 
 }
 
-const reducer= (state, action) =>{
+const reducer = (state, action) => {
     // console.log('action :',action.payload)
     switch (action.type) {
-        case ADD_JOB:{
+        case ADD_JOB: {
+            const newjobs = [...state.jobs, {
+                id: state.jobs.length + 1,
+                completed: false,
+                name: action.payload
+            }]
+            localStorage.setItem('todo', JSON.stringify(newjobs));
+
             return {
                 ...state,
-                jobs: [...state.jobs, {
-                    id: state.jobs.length +1,
-                    completed: false,
-                    name: action.payload
-                }]
+                jobs: newjobs
             }
         }
-        case DELETE_JOB:{
-            
+        case DELETE_JOB: {
+            const newjobs = state.jobs.filter(job => job.id !== action.payload);
+            localStorage.setItem('todo', JSON.stringify(newjobs));
+
             return {
                 ...state,
-                jobs: state.jobs.filter(job => job.id!== action.payload)
+                jobs: newjobs
             }
         }
-        case SET_JOB:{
-            if(action.payload.value){
+        case SET_JOB: {
+            if (action.payload.value) {
+                
+                const newjobs = state.jobs.map(job => {
+                    if (job.id === action.payload.id) {
+                        return {
+                            ...job,
+                            name: action.payload.value
+                        }
+                    }
+                    return job;
+                })
+                localStorage.setItem('todo', JSON.stringify(newjobs));
+
                 return {
                     ...state,
-                    jobs: state.jobs.map(job => {
-                        if(job.id=== action.payload.id){
-                            return {
-                                ...job,
-                                name: action.payload.value
-                            }
-                        }
-                        return job;
-                    })
+                    jobs: newjobs
                 }
             }
+            const newjobs = state.jobs.map(job => {
+                if (job.id === action.payload.id) {
+                    return {
+                        ...job,
+                        completed: action.payload.completed
+                    }
+                }
+                return job;
+            })
+            localStorage.setItem('todo', JSON.stringify(newjobs));
+
             return {
                 ...state,
-                    jobs: state.jobs.map(job => {
-                        if(job.id=== action.payload.id){
-                            return {
-                                ...job,
-                                completed: action.payload.completed
-                            }
-                        }
-                        return job;
-                    })
+                jobs: newjobs
             }
         }
-        case SET_COMPLETED_JOBS:{
-            
+        case SET_COMPLETED_JOBS: {
+            const newjobs = state.jobs.map(job => ({ ...job, completed: true }));
+            localStorage.setItem('todo', JSON.stringify(newjobs));
+
             return {
                 ...state,
-                jobs: state.jobs.map(job =>({...job, completed: true}))
+                jobs: newjobs
             }
         }
-        case SET_FILTER:{
-            
+        case SET_FILTER: {
+
             return {
                 ...state,
-                filter:action.payload
+                filter: action.payload
             }
         }
-        case DELETED_COMPLETED_JOBS:{
-            
+        case DELETED_COMPLETED_JOBS: {
+            const newjobs = state.jobs.filter(job => !job.completed);
+            localStorage.setItem('todo', JSON.stringify(newjobs));
             return {
                 ...state,
-                jobs: state.jobs.filter(job => !job.completed)
+                jobs: newjobs
             }
         }
-        default:
+        default: {
+
             return state;
+        }
+
     }
 }
 
 export default reducer;
-export {initState}
+export { initState }

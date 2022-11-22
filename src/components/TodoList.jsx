@@ -38,7 +38,7 @@ function TodoList() {
             <button 
                 onClick={() =>dispatch(setCompletedJobs())}
                 className='bg-green-500 p-1 pl-2 pr-2 rounded-lg text-left mb-2'
-            >Check All</button>
+            ><i className="fa-solid fa-chevron-down"></i></button>
             {jobFilter().length > 0 ? (
                 jobFilter().map((job) => (
                     <div
@@ -76,7 +76,7 @@ function TodoList() {
             ) : (
                 <h3 className="italic">Todo List Embty</h3>
             )}
-            <h3 className="text-left">{jobFilter().length} item</h3>
+            <h3 className="text-left ">{jobFilter().length} item</h3>
         </div>
     );
 }
