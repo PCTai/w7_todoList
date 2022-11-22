@@ -43,7 +43,7 @@ function TodoList() {
                 jobFilter().map((job) => (
                     <div
                         key={job.id}
-                        className="todo mb-2  text-gray-800 text-left  border-b-2 flex justify-between relative"
+                        className="todo pt-2 pb-2 mb-2  text-gray-800 text-left  border-b-2 flex justify-between relative"
                     >
                         <div className="todo-l flex">
                             <input 
@@ -60,7 +60,7 @@ function TodoList() {
                             </button>
                             <button
                                 onClick={() => handleDeleteJob(job.id)}
-                                className="text-red-500 ml-1"
+                                className="text-red-500 ml-2"
                             >
                                 <i className="fa-solid fa-trash-can"></i>
                             </button>
@@ -69,7 +69,7 @@ function TodoList() {
                             onKeyDown={handleSubmitEdit}
                             onBlur= {(e) =>{setEdit(0); e.target.value=''}}
                             type="text" placeholder={job.name} 
-                            className={`absolute  top-0 left-4 right-10 pl-2 outline-none ${edit===job.id ? 'block' : 'hidden'}`}
+                            className={`absolute  top-0 left-3 right-10 pl-2 pt-2 pb-2 outline-none ${edit===job.id ? 'block' : 'hidden'}`}
                         />
                     </div>
                 ))

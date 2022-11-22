@@ -4,7 +4,7 @@ import { useStore } from "../store/hooks";
 function Filter() {
 
     const [state, dispatch] = useStore();
-    const { filter, filters, jobs } = state;
+    const { filter, filters} = state;
 
     const handleSetFilter = (value) => {
         dispatch(setFilter(value))

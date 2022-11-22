@@ -4,7 +4,7 @@ import {addJob} from '../actions'
 
 function Header() {
 
-    const [state, dispatch] = useStore();
+    const [, dispatch] = useStore();
     const [job, setJob] = useState('');
     // console.log(job, );
     const inputRef = useRef();
