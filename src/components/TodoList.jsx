@@ -13,70 +13,82 @@ function TodoList() {
         return jobs.filter(filters[filter]);
     };
 
-    const handleEditJob =(id) =>{
+    const handleEditJob = (id) => {
         setEdit(id)
     }
-    const handleSubmitEdit =(e) =>{
+    const handleSubmitEdit = (e) => {
         if (e.keyCode === 13) {
-            dispatch(setJob({
-                value: e.target.value,
-                id: edit
-            }));
-            setEdit(0);
-            e.target.value= '';
+            if(e.target.value.trim()!==''){
+                dispatch(setJob({
+                    value: e.target.value,
+                    id: edit
+                }));
+                setEdit(0);
+                e.target.value = '';
+            }
+            else{
+                setEdit(0);
+                e.target.value='';
+            }
+
         }
-        
+
     }
-    const handleSetCompleteJob =(e, id) =>{
+    
+    const handleSetCompleteJob = (e, id) => {
         dispatch(setJob({
             id: id,
             completed: e.target.checked
         }))
     }
     return (
-        <div className="list-todo bg-white  mt-6 max-h-max rounded-lg p-6 text-left">
-            <button 
-                onClick={() =>dispatch(setCompletedJobs())}
-                className='bg-green-500 p-1 pl-2 pr-2 rounded-lg text-left mb-2'
+        <div className="list-todo bg-white  mt-6 max-h-max rounded-lg p-4 text-left">
+            <button
+                onClick={() => dispatch(setCompletedJobs())}
+                className='ml-4 pr-2 rounded-lg text-left mb-2'
             ><i className="fa-solid fa-chevron-down"></i></button>
             {jobFilter().length > 0 ? (
                 jobFilter().map((job) => (
                     <div
                         key={job.id}
-                        className="todo pt-2 pb-2 mb-2  text-gray-800 text-left  border-b-2 flex justify-between relative"
+                        className="todo p-4  mb-2  text-gray-800 rounded-lg  border-2 flex justify-between relative items-center"
                     >
-                        <div className="todo-l flex">
-                            <input 
-                                onChange={(e) =>handleSetCompleteJob(e, job.id)}
-                                type="checkbox" name="" id="" checked={job.completed} />
-                            <h3 className={`ml-2 ${job.completed ? 'opacity-60': ''}`}>{job.name}</h3>
-                        </div>
-                        <div className="todo-handle">
-                            <button 
-                                onClick={() =>handleEditJob(job.id)}
-                                className="text-blue-500 "
+
+                        <input
+                            onChange={(e) => handleSetCompleteJob(e, job.id)}
+                            type="checkbox" name="" id="" checked={job.completed} 
+                            className='bg-yellow-600 text-white'    
+                        />
+                        <span className={`pl-4 pr-4 flex-1 first-letter:uppercase   ${job.completed ? 'opacity-60' : ''}`}>{job.name}</span>
+
+                        <div className="todo-handle  text-right">
+                            <button
+                                onClick={() => handleEditJob(job.id)}
+                                className="text-yellow-600 "
                             >
                                 <i className="fa-solid fa-pen-to-square"></i>
                             </button>
                             <button
                                 onClick={() => handleDeleteJob(job.id)}
-                                className="text-red-500 ml-2"
+                                className="text-yellow-600 ml-2"
                             >
                                 <i className="fa-solid fa-trash-can"></i>
                             </button>
                         </div>
-                        <input 
-                            onKeyDown={handleSubmitEdit}
-                            onBlur= {(e) =>{setEdit(0); e.target.value=''}}
-                            type="text" placeholder={job.name} 
-                            className={`absolute  top-0 left-3 right-10 pl-2 pt-2 pb-2 outline-none ${edit===job.id ? 'block' : 'hidden'}`}
-                        />
+                       <div className={`${edit === job.id ? 'block' : 'hidden'} flex absolute  top-0 left-0 right-0 bottom-0 p-4`}>
+                            <input
+                                onKeyDown={handleSubmitEdit}
+                                onBlur={(e) => { setEdit(0); e.target.value = '' }}
+                                type="text" placeholder={job.name}
+                                className={` outline-none flex-1 pr-4`}
+                            />
+                       </div>
                     </div>
                 ))
             ) : (
-                <h3 className="italic">Todo List Embty</h3>
+                <h3 className="italic opacity-60">Embty</h3>
             )}
-            <h3 className="text-left ">{jobFilter().length} item</h3>
+            <h3 className="text-left font-bold">To do : {jobFilter().length} </h3>
         </div>
     );
 }

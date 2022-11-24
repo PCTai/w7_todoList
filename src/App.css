@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  transition: all 0.3s linear;
 }
 
 .App-logo {
@@ -23,7 +24,13 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+.todo-handle {
+  opacity: 0;
+  transition: all 0.3s linear;
+}
+.todo:hover .todo-handle {
+  opacity: 1;
+}
 .App-link {
   color: #61dafb;
 }

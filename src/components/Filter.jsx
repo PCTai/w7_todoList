@@ -13,11 +13,11 @@ function Filter() {
         dispatch(deleteCompletedJob())
     }
     return (
-        <div className="footer flex justify-between bg-white p-2 pr-6 pl-6 rounded-lg mt-2">
-            <div className="handle">
+        <div className="footer flex justify-between bg-white p-4 rounded-lg mt-2">
+            <div className="handle-clear">
                 <button 
                     onClick={handleDeleteCompleted}
-                className="p-1 pl-2 pr-2 rounded-lg bg-red-500"><i className="fa-solid fa-trash-can"></i> Completed</button>
+                className="p-1 pl-2 pr-2 rounded-lg border-2 border-yellow-600 text-yellow-600 hover:bg-yellow-600 hover:text-white"><i className="fa-solid fa-trash-can"></i> Completed</button>
             </div>
             <div className="filters  ">
 
@@ -25,7 +25,7 @@ function Filter() {
                     <button
                         key={item}
                         onClick={() => handleSetFilter(item)}
-                        className={`filter-item p-1 pl-2 pr-2 rounded-lg ${filter === item ? 'bg-green-500 text-gray-800' : ''}`}>
+                        className={`filter-item border-2 ml-2 p-1 pl-2 pr-2 rounded-lg hover:bg-yellow-600 hover:text-white ${filter === item ? 'border-yellow-600 text-yellow-600' : ''}`}>
                         {item[0].toUpperCase() + item.slice(1)}
                     </button>
                 ))}
