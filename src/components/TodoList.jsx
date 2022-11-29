@@ -6,6 +6,7 @@ function TodoList() {
     const [state, dispatch] = useStore();
     const { jobs, filter, filters } = state;
     const [edit, setEdit] = useState(0);
+    const [valueEdit, setValueEdit] = useState('');
     const handleDeleteJob = (id) => {
         dispatch(deleteJob(id));
     };
@@ -14,7 +15,9 @@ function TodoList() {
     };
 
     const handleEditJob = (id) => {
+
         setEdit(id)
+        setValueEdit(jobs[id-1].name);
     }
     const handleSubmitEdit = (e) => {
         if (e.keyCode === 13) {
@@ -25,6 +28,7 @@ function TodoList() {
                 }));
                 setEdit(0);
                 e.target.value = '';
+                setValueEdit('');
             }
             else{
                 setEdit(0);
@@ -40,6 +44,9 @@ function TodoList() {
             id: id,
             completed: e.target.checked
         }))
+    }
+    const handleSetValueEdit = (e) => {
+        setValueEdit(e.target.value)
     }
     return (
         <div className="list-todo bg-white  mt-6 max-h-max rounded-lg p-4 text-left">
@@ -78,9 +85,13 @@ function TodoList() {
                        <div className={`${edit === job.id ? 'block' : 'hidden'} flex absolute  top-0 left-0 right-0 bottom-0 p-4`}>
                             <input
                                 onKeyDown={handleSubmitEdit}
+                                value={valueEdit}
                                 onBlur={(e) => { setEdit(0); e.target.value = '' }}
                                 type="text" placeholder={job.name}
+                                autoFocus={true}
+                                onChange={(e) =>handleSetValueEdit(e)}
                                 className={` outline-none flex-1 pr-4`}
+
                             />
                        </div>
                     </div>
